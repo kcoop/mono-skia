@@ -24,8 +24,20 @@ void sk_picture_recorder_delete(sk_picture_recorder_t* crec) {
     delete AsPictureRecorder(crec);
 }
 
+sk_rtree_factory_t* sk_rtree_factory_new(void) {
+    return ToRTreeFactory(new SkRTreeFactory);
+}
+
+void sk_rtree_factory_delete(sk_rtree_factory_t* factory) {
+    delete AsRTreeFactory(factory);
+}
+
 sk_canvas_t* sk_picture_recorder_begin_recording(sk_picture_recorder_t* crec, const sk_rect_t* cbounds) {
     return ToCanvas(AsPictureRecorder(crec)->beginRecording(*AsRect(cbounds)));
+}
+
+sk_canvas_t* sk_picture_recorder_begin_recording_with_bbh_factory(sk_picture_recorder* crec, const sk_rect_t* cbounds, const sk_bbh_factory_t* factory) {
+    return ToCanvas(AsPictureRecorder(crec)->beginRecording(*AsRect(cbounds), AsBBHFactory(factory)));
 }
 
 sk_picture_t* sk_picture_recorder_end_recording(sk_picture_recorder_t* crec) {
